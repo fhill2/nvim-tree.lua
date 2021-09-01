@@ -15,6 +15,8 @@ local refresh_entries = pops.refresh_entries
 local first_init_done = false
 local window_opts = config.window_options()
 
+local log = require'log1'
+
 local M = {}
 
 M.Tree = {
@@ -437,6 +439,7 @@ function M.open_file_in_tab(filename)
 end
 
 function M.change_dir(name)
+  --log.info(debug.getinfo(2))
   local changed_win = vim.v.event and vim.v.event.changed_window
   local foldername = name == '..' and vim.fn.fnamemodify(M.Tree.cwd, ':h') or name
   local no_cwd_change = vim.fn.expand(foldername) == M.Tree.cwd

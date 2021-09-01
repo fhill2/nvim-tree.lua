@@ -42,6 +42,7 @@ M.View = {
     bufhidden = 'hide';
   },
   bindings = {
+    { key = "<space>dd",                    cb = M.nvim_tree_callback("live_grep") },
     { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = M.nvim_tree_callback("edit") },
     { key = {"<2-RightMouse>", "<C-]>"},    cb = M.nvim_tree_callback("cd") },
     { key = "<C-v>",                        cb = M.nvim_tree_callback("vsplit") },

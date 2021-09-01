@@ -92,6 +92,10 @@ local keypress_funcs = {
 }
 
 function M.on_keypress(mode)
+  if mode == 'live_grep' then
+   require'plugin/nvim-tree'.live_grep(lib.get_node_at_cursor())
+  end
+
   if view.is_help_ui() and mode ~= 'toggle_help' then return end
   local node = lib.get_node_at_cursor()
   if not node then return end
@@ -193,19 +197,19 @@ function M.on_leave()
 end
 
 local function update_root_dir()
-  local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if not is_file_readable(bufname) or not lib.Tree.cwd then return end
+  -- local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
+  -- if not is_file_readable(bufname) or not lib.Tree.cwd then return end
 
-  -- this logic is a hack
-  -- depending on vim-rooter or autochdir, it would not behave the same way when those two are not enabled
-  -- until i implement multiple workspaces/project, it should stay like this
-  if bufname:match(utils.path_to_matching_str(lib.Tree.cwd)) then
-    return
-  end
-  local new_cwd = luv.cwd()
-  if lib.Tree.cwd == new_cwd then return end
+  -- -- this logic is a hack
+  -- -- depending on vim-rooter or autochdir, it would not behave the same way when those two are not enabled
+  -- -- until i implement multiple workspaces/project, it should stay like this
+  -- if bufname:match(utils.path_to_matching_str(lib.Tree.cwd)) then
+  --   return
+  -- end
+  -- local new_cwd = luv.cwd()
+  -- if lib.Tree.cwd == new_cwd then return end
 
-  lib.change_dir(new_cwd)
+  -- lib.change_dir(new_cwd)
 end
 
 function M.buf_enter()
